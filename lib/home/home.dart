@@ -17,22 +17,21 @@ class HomePage extends StatelessWidget {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          if (state is HomeInitial) {
-            return const Center(
-              child: Text('No hay carros registrados'),
-            );
-          }
           if (state is HomeShowCarsState) {
-            return ListView(
-              children: state.cars
-                  .map(
-                    (e) => ListTile(
-                      title: Text(e.plateNumber),
-                      subtitle: Text(e.owner),
-                    ),
+            return state.cars.isNotEmpty
+                ? ListView(
+                    children: state.cars
+                        .map(
+                          (e) => ListTile(
+                            title: Text(e.plateNumber),
+                            subtitle: Text(e.owner),
+                          ),
+                        )
+                        .toList(),
                   )
-                  .toList(),
-            );
+                : Center(
+                    child: Text('No hay vehiculos registrados...'),
+                  );
           }
           return Container();
         },
