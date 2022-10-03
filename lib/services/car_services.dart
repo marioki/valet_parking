@@ -48,4 +48,23 @@ class CarService {
       ),
     );
   }
+
+  Car getCarDetails(int key) {
+    final carDetails = _cars.values.elementAt(key);
+    return carDetails;
+  }
+
+  Future<void> checkOutCar(int key, DateTime checkOutTime) async {
+    final Car currentDetails = _cars.values.elementAt(key);
+    await _cars.put(
+      key,
+      Car(
+        plateNumber: currentDetails.plateNumber,
+        owner: currentDetails.owner,
+        checkInDate: currentDetails.checkInDate,
+        checkOut: checkOutTime,
+        isCheckedOut: true,
+      ),
+    );
+  }
 }

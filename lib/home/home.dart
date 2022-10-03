@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:valet_parking/car_details/bloc/car_details_bloc.dart';
+import 'package:valet_parking/car_details/car_details.dart';
 import 'package:valet_parking/home/bloc/bloc/home_bloc.dart';
 
 class HomePage extends StatelessWidget {
@@ -23,13 +25,30 @@ class HomePage extends StatelessWidget {
                     children: state.cars
                         .map(
                           (e) => ListTile(
+                            onTap: () {
+                              BlocProvider.of<CarDetailsBloc>(context)
+                                  .add(ShowCarDetailsEvent(e.key));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CarDetialsPage(),
+                                ),
+                              );
+                            },
                             title: Text(e.plateNumber),
                             subtitle: Text(e.owner),
+                            trailing: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('check in:'),
+                                Text(e.checkInDate.toLocal().toString()),
+                              ],
+                            ),
                           ),
                         )
                         .toList(),
                   )
-                : Center(
+                : const Center(
                     child: Text('No hay vehiculos registrados...'),
                   );
           }
