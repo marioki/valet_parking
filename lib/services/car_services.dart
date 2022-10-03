@@ -17,13 +17,13 @@ class CarService {
     return cars.toList();
   }
 
-  void addCar(String carPlate, String carOwner, DateTime checkIn) {
+  void addCar(String carPlate, String carOwner, DateTime checkIn, double rate) {
     _cars.add(
       Car(
-        plateNumber: carPlate,
-        owner: carOwner,
-        checkInDate: checkIn,
-      ),
+          plateNumber: carPlate,
+          owner: carOwner,
+          checkInDate: checkIn,
+          rate: rate),
     );
   }
 

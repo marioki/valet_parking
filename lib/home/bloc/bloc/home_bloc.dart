@@ -19,7 +19,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<HomeAddCar>((event, emit) {
       print(event);
-      _carService.addCar(event.carPlate, event.carOwner, event.checkInTime);
+      _carService.addCar(
+          event.carPlate, event.carOwner, event.checkInTime, event.rate);
       print('Car List Length: ${_carService.getAllCars()}');
     });
 

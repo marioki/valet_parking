@@ -28,18 +28,34 @@ class CarDetialsPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 24),
                     ),
                     const SizedBox(height: 16),
-                    Text('Conductor: ${state.carDetails.owner}'),
+                    Text(
+                      'Conductor: ${state.carDetails.owner}',
+                      style: const TextStyle(fontSize: 24),
+                    ),
                     const SizedBox(height: 16),
                     Text(
-                        'Hora de entrada: ${DateFormat.Hms().format(state.carDetails.checkInDate)}'),
+                      'Hora de entrada: ${DateFormat.Hms().format(state.carDetails.checkInDate)}',
+                      style: const TextStyle(fontSize: 24),
+                    ),
                     state.carDetails.isCheckedOut
                         ? Column(
                             children: [
                               Text(
-                                  'Hora de Salida: ${DateFormat.Hms().format(state.carDetails.checkOut!)}'),
+                                'Hora de Salida: ${DateFormat.Hms().format(state.carDetails.checkOut!)}',
+                                style: const TextStyle(fontSize: 24),
+                              ),
                               Text(
-                                  'Tiempo transcurrido ${state.carDetails.checkInDate.difference(state.carDetails.checkOut!).inMinutes}'),
-                              // Text('Saldo a pagar: ${}')
+                                'Tiempo transcurrido ${state.carDetails.totalMinutesPassed!}',
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                              const Text(
+                                'Saldo a pagar: ',
+                                style: TextStyle(fontSize: 24),
+                              ),
+                              Text(
+                                '\$${state.carDetails.totalCost!.toStringAsFixed(4)}',
+                                style: const TextStyle(fontSize: 24),
+                              )
                             ],
                           )
                         : Container(),

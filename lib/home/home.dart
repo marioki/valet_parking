@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:valet_parking/car_details/bloc/car_details_bloc.dart';
 import 'package:valet_parking/car_details/car_details.dart';
 import 'package:valet_parking/home/bloc/bloc/home_bloc.dart';
@@ -12,7 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Valet App'),
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => showAddCarDialog(context),
@@ -31,17 +34,23 @@ class HomePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => CarDetialsPage(),
+                                  builder: (context) => const CarDetialsPage(),
                                 ),
                               );
                             },
-                            title: Text(e.plateNumber),
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(e.plateNumber),
+                                Text('Tarifa: \$${e.rate}')
+                              ],
+                            ),
                             subtitle: Text(e.owner),
                             trailing: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('check in:'),
-                                Text(e.checkInDate.toLocal().toString()),
+                                const Text('check in:'),
+                                Text(DateFormat.Hms().format(e.checkInDate)),
                               ],
                             ),
                           ),
@@ -56,6 +65,12 @@ class HomePage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  clearTextControllers() {
+    plateTextController.clear();
+    carOwnerTextController.clear();
+    rateTextController.clear();
   }
 
   showAddCarDialog(BuildContext context) {
@@ -92,7 +107,10 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              clearTextControllers();
+              Navigator.pop(context);
+            },
             child: const Text('cancelar'),
           ),
           TextButton(
@@ -106,7 +124,8 @@ class HomePage extends StatelessWidget {
                   rate: double.parse(rateTextController.text),
                 ),
               );
-              BlocProvider.of<HomeBloc>(context).add(UpdateCarsListEvent());
+              BlocProvider.of<HomeBloc>(context)
+                  .add(const UpdateCarsListEvent());
               Navigator.of(context).pop();
             },
             child: const Text('Agregar'),
