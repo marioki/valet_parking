@@ -14,5 +14,13 @@ class CarDetailsBloc extends Bloc<CarDetailsEvent, CarDetailsState> {
       final carDetails = _carService.getCarDetails(event.carKey);
       emit(LoadCarDetailsState(carDetails));
     });
+
+    on<CarCheckOutEvent>((event, emit) async {
+      DateTime checkOutTime = DateTime.now();
+      await _carService.checkOutCar(event.key, checkOutTime);
+      final carDetails = _carService.getCarDetails(event.key);
+      emit(LoadCarDetailsState(carDetails));
+      print(event);
+    });
   }
 }

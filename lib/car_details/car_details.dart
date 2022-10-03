@@ -7,21 +7,63 @@ class CarDetialsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text('Detalles')),
-      body: BlocBuilder<CarDetailsBloc, CarDetailsState>(
-        builder: (context, state) {
-          if (state is LoadCarDetailsState) {
-            return Column(
-              children: [
-                Text('CarPlate: ${state.carDetails.plateNumber}'),
-              ],
+      appBar: AppBar(title: const Text('Detalles')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: BlocBuilder<CarDetailsBloc, CarDetailsState>(
+          builder: (context, state) {
+            if (state is LoadCarDetailsState) {
+              print('New build...');
+              return SizedBox(
+                width: screenSize.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'Placa: ${state.carDetails.plateNumber}',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(height: 16),
+                    Text('Conductor: ${state.carDetails.owner}'),
+                    const SizedBox(height: 16),
+                    Text('Hora de entrada: ${state.carDetails.checkInDate}'),
+                    state.carDetails.isCheckedOut
+                        ? Column(
+                            children: [
+                              Text(
+                                  'Hora de Salida: ${state.carDetails.checkOut}'),
+                              Text(
+                                  'Tiempo transcurrido ${state.carDetails.checkInDate.difference(state.carDetails.checkOut!)}'),
+                            ],
+                          )
+                        : Container(),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: (() {
+                              print('button pressed');
+                              BlocProvider.of<CarDetailsBloc>(context)
+                                  .add(CarCheckOutEvent(state.carDetails.key));
+                            }),
+                            child: const Text('CHECK OUT'),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+            return const Center(
+              child: Text('Cargando datos...'),
             );
-          }
-          return Center(
-            child: Text('Cargando datos...'),
-          );
-        },
+          },
+        ),
       ),
     );
   }

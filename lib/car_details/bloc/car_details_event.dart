@@ -14,3 +14,11 @@ class ShowCarDetailsEvent extends CarDetailsEvent {
   @override
   List<Object> get props => [carKey];
 }
+
+class CarCheckOutEvent extends CarDetailsEvent {
+  final int key;
+  const CarCheckOutEvent(this.key);
+
+  @override
+  List<Object> get props => [key];
+}
