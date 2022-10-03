@@ -8,7 +8,6 @@ class CarService {
     print('.....INITIALIZING _CARS OBJECT');
     Hive.registerAdapter(CarAdapter());
     _cars = await Hive.openBox<Car>('cars');
-    await _cars.clear();
     print('_CARS OBJECT INITIALIZATION SUCCESS');
   }
 
