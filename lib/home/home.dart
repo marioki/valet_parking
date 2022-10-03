@@ -126,6 +126,7 @@ class HomePage extends StatelessWidget {
               );
               BlocProvider.of<HomeBloc>(context)
                   .add(const UpdateCarsListEvent());
+              clearTextControllers();
               Navigator.of(context).pop();
             },
             child: const Text('Agregar'),
