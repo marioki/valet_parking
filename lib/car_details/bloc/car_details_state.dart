@@ -12,7 +12,9 @@ class CarDetailsInitial extends CarDetailsState {}
 class LoadCarDetailsState extends CarDetailsState {
   final Car carDetails;
 
-  const LoadCarDetailsState(this.carDetails);
+  const LoadCarDetailsState(
+    this.carDetails,
+  );
 
   @override
   List<Object> get props => [carDetails];

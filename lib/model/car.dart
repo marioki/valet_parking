@@ -16,6 +16,10 @@ class Car extends HiveObject {
   final bool isCheckedOut;
   @HiveField(5)
   final double rate;
+  @HiveField(6)
+  final int? totalMinutesPassed;
+  @HiveField(7)
+  final double? totalCost;
 
   Car({
     required this.plateNumber,
@@ -24,5 +28,7 @@ class Car extends HiveObject {
     this.checkOut,
     this.isCheckedOut = false,
     this.rate = 1,
+    this.totalMinutesPassed,
+    this.totalCost,
   });
 }

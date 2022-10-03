@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:valet_parking/car_details/bloc/car_details_bloc.dart';
+import 'package:intl/intl.dart';
 
 class CarDetialsPage extends StatelessWidget {
   const CarDetialsPage({super.key});
@@ -29,14 +30,16 @@ class CarDetialsPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text('Conductor: ${state.carDetails.owner}'),
                     const SizedBox(height: 16),
-                    Text('Hora de entrada: ${state.carDetails.checkInDate}'),
+                    Text(
+                        'Hora de entrada: ${DateFormat.Hms().format(state.carDetails.checkInDate)}'),
                     state.carDetails.isCheckedOut
                         ? Column(
                             children: [
                               Text(
-                                  'Hora de Salida: ${state.carDetails.checkOut}'),
+                                  'Hora de Salida: ${DateFormat.Hms().format(state.carDetails.checkOut!)}'),
                               Text(
-                                  'Tiempo transcurrido ${state.carDetails.checkInDate.difference(state.carDetails.checkOut!)}'),
+                                  'Tiempo transcurrido ${state.carDetails.checkInDate.difference(state.carDetails.checkOut!).inMinutes}'),
+                              // Text('Saldo a pagar: ${}')
                             ],
                           )
                         : Container(),
@@ -47,8 +50,9 @@ class CarDetialsPage extends StatelessWidget {
                           TextButton(
                             onPressed: (() {
                               print('button pressed');
-                              BlocProvider.of<CarDetailsBloc>(context)
-                                  .add(CarCheckOutEvent(state.carDetails.key));
+                              BlocProvider.of<CarDetailsBloc>(context).add(
+                                  CarCheckOutEvent(
+                                      state.carDetails.key, state.carDetails));
                             }),
                             child: const Text('CHECK OUT'),
                           ),

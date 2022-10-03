@@ -17,7 +17,8 @@ class ShowCarDetailsEvent extends CarDetailsEvent {
 
 class CarCheckOutEvent extends CarDetailsEvent {
   final int key;
-  const CarCheckOutEvent(this.key);
+  final Car car;
+  const CarCheckOutEvent(this.key, this.car);
 
   @override
   List<Object> get props => [key];

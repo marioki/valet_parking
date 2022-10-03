@@ -54,17 +54,25 @@ class CarService {
     return carDetails;
   }
 
-  Future<void> checkOutCar(int key, DateTime checkOutTime) async {
+  Future<void> checkOutCar(
+    int key,
+    DateTime checkOutTime,
+    double rate,
+    double totalCost,
+    int minutesPassed,
+  ) async {
     final Car currentDetails = _cars.values.elementAt(key);
     await _cars.put(
       key,
       Car(
-        plateNumber: currentDetails.plateNumber,
-        owner: currentDetails.owner,
-        checkInDate: currentDetails.checkInDate,
-        checkOut: checkOutTime,
-        isCheckedOut: true,
-      ),
+          plateNumber: currentDetails.plateNumber,
+          owner: currentDetails.owner,
+          checkInDate: currentDetails.checkInDate,
+          checkOut: checkOutTime,
+          isCheckedOut: true,
+          rate: rate,
+          totalCost: totalCost,
+          totalMinutesPassed: minutesPassed),
     );
   }
 }
